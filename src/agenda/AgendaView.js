@@ -3,6 +3,7 @@ setDefaults({
 	allDaySlot: true,
 	allDayText: 'all-day',
 	firstHour: 6,
+  rememberHour: false,
 	slotMinutes: 30,
 	defaultEventMinutes: 120,
 	axisFormat: 'h(:mm)tt',
@@ -440,9 +441,11 @@ function AgendaView(element, calendar, viewName) {
 		var scrollDate = cloneDate(d0);
 		scrollDate.setHours(opt('firstHour'));
 		var top = timePosition(d0, scrollDate) + 1; // +1 for the border
-		function scroll() {
-			slotScroller.scrollTop(top);
-		}
+    function scroll() {
+      if (slotScroller.scrollTop() == 0 || !opt('rememberHour')){
+        slotScroller.scrollTop(top);
+      }
+    }
 		scroll();
 		setTimeout(scroll, 0); // overrides any previous scroll state made by the browser
 	}
